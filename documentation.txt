@@ -1,0 +1,19 @@
+                                Debugs
+1
+first debug i ran into was with the request sending. when testing POST. in the struct i 
+bind required elements name, description, locationm datetime. datetime requires specific
+input. it should look like this 2024-08-21T14:00:00Z.  if you pass like 2024-20-24 there
+will be server side error. 
+
+2
+working with database. error was with the variable DB inside initDB function was 
+shadowing package level DB variable he DB inside the InitDB function is not the same 
+as the DB variable that you want to use across your package, 
+so when you try to use DB in other functions (like createTables()), 
+it is still nil, leading to a runtime error.
+
+3 
+order of calling the functions in the main function. first there was a db caller, then
+gin default function. If you try to access the DB variable before it's initialized, 
+you'll run into a nil pointer dereference.
+
